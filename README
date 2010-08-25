@@ -4,3 +4,5 @@ The program works in scrapy framework (scrapy.org).
 In order to run parser, type ./scrapy-ctl.py runspider fas/spiders/rnp.py
 Parsed data available at scraped_items.csv
 
+Author: Viktor Mireyev
+License: Creative Commons Attribution 3.0 Unported License
