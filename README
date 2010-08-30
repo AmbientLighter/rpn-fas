@@ -1,6 +1,6 @@
 Parser for open government data at http://rnp.fas.gov.ru/
 
-The program works in scrapy framework (scrapy.org).
+The program works in scrapy framework (scrapy.org), version 0.8.
 In order to run parser, type ./scrapy-ctl.py runspider fas/spiders/rnp.py
 Parsed data available at scraped_items.csv
 
