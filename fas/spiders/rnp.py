@@ -17,25 +17,26 @@ class RnpSpider(BaseSpider):
     start_urls = ['http://rnp.fas.gov.ru/Default.aspx']
 
     def parse(self, response):
+        response = response.replace(body=response.body.replace("disabled",""))
         xs = HtmlXPathSelector(response)
         requests = []
         ids = xs.select("//input[contains(@name,'btnView')]/@onclick").re('id=[a-z0-9-]+')
         for id in ids:
             requests.append(Request("http://rnp.fas.gov.ru/RNPCard.aspx?%s" % id, callback=self.parse_item))
-        
-        try:
+            
+        start_index = xs.select("//span[@id='ctl00_phWorkZone_rnpList_datapgr_lblRecNumTill']/text()").extract()[0]
+        end_index = xs.select("//span[@id='ctl00_phWorkZone_rnpList_datapgr_lblRecNumAll']/text()").extract()[0]
+        if start_index!=end_index:
             el = xs.select("//input[@id='ctl00_phWorkZone_rnpList_datapgr_tbRecNumFrom']/@value")[0]
             val = int(el.extract())
-        except IndexError, ValueError:
-            val = 1
-        newval = val+10
-        requests.append(FormRequest.from_response(
-                response,
-                formdata={'ctl00$phWorkZone$rnpList$datapgr$tbRecNumFrom':newval},
-                callback=self.parse
+            newval = val+10
+            requests.append(FormRequest.from_response(
+                    response,
+                    formdata={'ctl00$phWorkZone$rnpList$datapgr$tbRecNumFrom':newval},
+                    callback=self.parse
+                )
             )
-        )
-                    
+                
         for request in requests:
             yield request
         
