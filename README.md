@@ -1,7 +1,4 @@
-# Parser for open government data at http://rnp.fas.gov.ru/
-
 Please note that this parser is outdated as it doesn't support new design of rnp.fas.gov.ru.
-
 Parsed data available at scraped_items.csv
 Parsed at 26.08.2010 (now it's changed)
 
